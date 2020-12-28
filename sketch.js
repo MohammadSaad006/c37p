@@ -80,7 +80,7 @@ function draw(){
    //feed.show();
    //addFood.show();
   
- }
+ 
  fill("black");
  text("Milk Bottles Remaining  "+FoodS,170,440);
   fill(255,255,254);
