@@ -5,6 +5,7 @@ var foodobject
 var Feedtime
 var Lastfeed,milk3,milk2,FoodS
 var sadDog
+var dogimg1,dogimg2
 var gameState="PLAY"
 //Create variables here
 
@@ -13,7 +14,7 @@ function preload(){
   dogimg1 = loadImage("dogImg.png")
   dogimg2 = loadImage("dogImg1.png")
   milk3 = loadImage("Milk.png");
-	sadDog =loadImage("virtual pet images/Lazy.png")
+	sadDog =loadImage("Lazy.png")
 }
 
 function setup() {
@@ -31,12 +32,16 @@ function setup() {
   });
 
   foodobject=new Food()
-  
+
+ 
+  dog = createSprite(550,250,10,10);
+  dog.addImage(dogimg1)
+  dog.scale=0.2  
   
  
 
-  var dog = database.ref('Food');
-  dog.on("value", readPosition, showError);
+  var dog1 = database.ref('Food');
+  dog1.on("value", readPosition, showError);
 feed = createButton("FEED DRAGO")
 feed.position(500,100)
 feed.mousePressed(FeedDog)
@@ -48,16 +53,14 @@ milk2=createSprite(500,310,20,20)
 milk2.addImage(milk3)
 milk2.scale=0.1
 milk2.visible = false;
+
 } 
 
 
 
 function draw(){
   background(46,139,87);
- 
-  dog = createSprite(550,250,10,10);
-  dog.addImage(dogimg1)
-  dog.scale=0.2
+
   
  foodobject.display()
  if (Lastfeed>=12){
@@ -115,17 +118,19 @@ function writePosition(nazo){
 
 }
 function AddFood(){
-  dog.addImage(dogimg1)
+  
   milk2.visible = false;
-  FoodS++
-database.ref('/').update({
-  Food:FoodS
-})
+  dog.addImage(dogimg1);
+  FoodS++;
+  database.ref('/').update({
+    Food:FoodS
+  })
+  
 }
 function FeedDog(){
   FoodS--
   milk2.visible = true;
-dog.addImage(dogimg2)
+  
  
 foodobject.updateFoodStock(foodobject.getFoodStock()-1)
  database.ref('/').update({
@@ -133,6 +138,7 @@ foodobject.updateFoodStock(foodobject.getFoodStock()-1)
    Food:foodobject.getFoodStock(),
    FeedTime:hour()
  })
+ dog.addImage(dogimg2)
 }
 function update(state){
 database.ref('/').update({
